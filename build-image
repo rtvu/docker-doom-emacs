@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIRECTORY=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
+
+docker build --file ${SCRIPT_DIRECTORY}/Dockerfile --tag doom-emacs ${SCRIPT_DIRECTORY}

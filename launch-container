@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIRECTORY=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
+PROJECT_NAME=$(basename "${SCRIPT_DIRECTORY}")
+
+failed=false
+
+for DIRECTORY in emacs .doom.d org ; do
+  if [[ ! -d "${SCRIPT_DIRECTORY}/../${DIRECTORY}" ]] ; then
+    echo "Missing directory: ${DIRECTORY}"
+    failed=true
+  fi
+done
+
+if [[ "${failed}" = true ]] ; then
+  echo failed
+  exit 1
+fi
+
+docker compose --project-name ${PROJECT_NAME} --file ${SCRIPT_DIRECTORY}/docker-compose.yml up --detach
+docker attach ${PROJECT_NAME}-main-1
+docker compose --project-name ${PROJECT_NAME} --file ${SCRIPT_DIRECTORY}/docker-compose.yml down
