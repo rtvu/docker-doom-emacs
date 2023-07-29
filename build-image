@@ -2,4 +2,6 @@
 
 SCRIPT_DIRECTORY=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
 
+git -C ${SCRIPT_DIRECTORY} submodule update --init --recursive --remote
+${SCRIPT_DIRECTORY}/base-image/build-image
 docker build --file ${SCRIPT_DIRECTORY}/Dockerfile --tag doom-emacs ${SCRIPT_DIRECTORY}
