@@ -1,6 +1,6 @@
-# Docker Doom Emacs
+# Docker Emacs
 
-Docker image for Doom Emacs.
+Docker image for Emacs.
 
 # Requirements
 
@@ -19,5 +19,3 @@ Docker image for Doom Emacs.
 # Scripts
 
 * `build-image`
-* `install-doom-emacs`
-* `launch-container`

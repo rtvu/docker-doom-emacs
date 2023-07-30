@@ -11,5 +11,5 @@ services:
     volumes:
       - ./install-doom-emacs:/home/user/install-doom-emacs
       - ../.doom.d:/home/user/.doom.d
-      - ../emacs:/home/user/.config/emacs
+      - ../emacs-doom-emacs:/home/user/.config/emacs
       - ../org:/home/user/org
