@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+shopt -s dotglob
+
+if [[ -d "${HOME}/.config/emacs" ]] ; then
+  rm -rf "${HOME}/.config/emacs"/*
+  git clone https://github.com/syl20bnr/spacemacs "${HOME}/.config/emacs"
+fi

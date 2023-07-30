@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIRECTORY=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
+PROJECT_NAME=$(basename "${SCRIPT_DIRECTORY}")
+
+BUILD="false"
+while getopts "b" OPTION; do
+  case "$OPTION" in
+    b) BUILD="true";;
+  esac
+done
+shift "$((OPTIND-1))"
+
+failed=false
+
+for DIRECTORY in emacs-spacemacs .spacemacs.d org ; do
+  if [[ ! -d "${SCRIPT_DIRECTORY}/../${DIRECTORY}" ]] ; then
+    echo "Missing directory: ${DIRECTORY}"
+    failed=true
+  fi
+done
+
+if [[ "${failed}" = true ]] ; then
+  echo failed
+  exit 1
+fi
+
+if [[ "${BUILD}" == "true" ]]; then
+  docker compose --project-name ${PROJECT_NAME} --file ${SCRIPT_DIRECTORY}/docker-compose-spacemacs.yml build --quiet
+fi
+
+docker compose --project-name ${PROJECT_NAME} --file ${SCRIPT_DIRECTORY}/docker-compose-spacemacs.yml up --detach
+docker attach ${PROJECT_NAME}-main-1
+docker compose --project-name ${PROJECT_NAME} --file ${SCRIPT_DIRECTORY}/docker-compose-spacemacs.yml down
